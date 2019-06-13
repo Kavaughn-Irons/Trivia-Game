@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> 
+ <link rel="stylesheet" type="text/css" href="Stylesheet.css">   
+<head>
+  <meta charset="utf-8">
+ 
+ <title>New York Times Article Search</title>
+</head>
+
+<body>
+  
+    <div class="container">
+        <div class="row" style="margin-top: 50px; margin-bottom: 50px;">
+            <div class="col-xl-12" style="height: 600px; background-color: lightsalmon">
+                <h1 style="color: white; text-align: center;font-size: 50px; padding-top: 30px;">Trivia Game</h1>
+                <hr style="background-color: black;">
+                <h2 id="amountOfTime" class="amountOfTime" style="color: black; text-align: center;font-size: 30px; padding-top: 30px;">Amount Of Time Left: 5s</h2>
+                
+                <h2 class="question-zero"class="question-zero" style="color: black; text-align: center;font-size: 30px; padding-top: 30px;"></h2>
+                <h2 class="question-one" style="text-align: center;font-size: 30px; padding-top: 30px;"></h2>
+                <h2 class="question-two" style="text-align: center;font-size: 30px; padding-top: 30px;"></h2>
+                <h2 class="question-three" style="text-align: center;font-size: 30px; padding-top: 30px;"></h2>
+                <h2 class="question-four" style="text-align: center;font-size: 30px; padding-top: 30px;"></h2>
+
+            </div>
+        </div>
+    </div>
+        
+       
+    
+    
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+   
+    
+    var theQuestion = [["What is the capital of the USA?","Washington D.C","New York","Cleveland","Spingfield"],["What's Prince's favorite color?","Green","Blue","Purple","Orange"],["Where is the Amazon rainforest located?","Brazil","Venezuela","columbia","The United States"],["What Year Did The United States Land A Man On The Moon?","2070","1972","1969","2001"],["What shape is the earth?","Flat","Sphere","Square","Triangle"]]  
+    
+    var amountOfQuestions = 3;
+    var whatQuestion = 0;
+    var amountCorrect = 0;
+    var amountWrong = 0;
+    var skipToNext = false;  
+    var counter = 0;
+    var correctArray = [false,false,false,false,false]
+    
+    function countCorrect(){
+        var x = 0;
+        while(x < correctArray.length){
+            if(correctArray[x] === true){ amountCorrect++; x++}
+            if(correctArray[x] === false){ amountWrong++; x++}
+        }
+    }
+    
+    function clicker(givenQuestion){
+         
+        $(".question-one").on("click", function (event) {
+            if(theQuestion[2] === givenQuestion){
+                correctArray[2] = true;
+                skipToNext = true;
+            }
+            if(theQuestion[0] === givenQuestion){
+                correctArray[0] = true;
+                skipToNext = true;
+            }     
+             skipToNext = true;
+         });
+         $(".question-two").on("click", function (event) {
+            if(theQuestion[4] === givenQuestion){
+                correctArray[4] = true;
+                skipToNext = true;
+            }
+         });
+        $(".question-three").on("click", function (event) {
+            if(theQuestion[3] === givenQuestion){
+                correctArray[3] = true;
+                skipToNext = true;
+            }
+            if(theQuestion[1] === givenQuestion){
+                correctArray[1] = true;
+                skipToNext = true;
+            }  
+             skipToNext = true;
+         });
+        $(".question-four").on("click", function (event) {
+                skipToNext = true;
+         });
+        
+    }
+    
+    function endGame(){
+        
+       
+        countCorrect()
+        
+        $(".question-zero").text("End Of Game!");
+        $(".question-one").text("Amount Of Correct Answers " + amountCorrect).unbind("mouseenter mouseleave");
+        $(".question-two").text("Amount Of Wrong Answers " + amountWrong);
+        $(".question-three").text("Click To Play Again!"); 
+        $(".question-four").empty(); 
+        $(".amountOfTime").empty(); 
+        $(".question-three").on("click", function (event) {
+            location.reload();
+         });
+    }  
+
+    function Timer(question){
+      
+        
+        clicker(question);
+        skipToNext = false;
+        var numberOfSecondsLeft = 5;
+        whatQuestion++;
+
+        var countDown = setInterval(function(){
+            numberOfSecondsLeft--;
+            $(".amountOfTime").text("Amount Of Time Left: " + numberOfSecondsLeft+"s"); 
+            $(".question-zero").text(question[0]); $(".question-one").text(question[1]); 
+            $(".question-two").text(question[2]); $(".question-three").text(question[3]); 
+            $(".question-four").text(question[4]);  
+            if(numberOfSecondsLeft <= 0 || skipToNext === true){ clearInterval(countDown); 
+                if(amountOfQuestions > -1){
+                    Timer(theQuestion[amountOfQuestions--]); 
+                } 
+                    if(whatQuestion === 5){ 
+                    if(counter == 1){endGame();} counter++;
+                    } 
+                    
+                }
+        
+            },1000);
+        
+        
+    
+    }  
+      
+      
+    function runGame(){
+        Timer(theQuestion[4]);
+      
+        
+        
+    }
+
+      runGame()
+      
+  </script>
+    
+
+
+    
+</body>
+
+</html>

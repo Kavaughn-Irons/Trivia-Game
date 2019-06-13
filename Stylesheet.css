@@ -1,0 +1,28 @@
+.question-one{
+    color: black;
+}
+.question-one:hover{
+    color: white;
+    cursor: pointer;
+}
+.question-two{
+    color: black;
+}
+.question-two:hover{
+    color: white;
+    cursor: pointer;
+}
+.question-three{
+    color: black;
+}
+.question-three:hover{
+    color: white;
+    cursor: pointer;
+}
+.question-four{
+    color: black;
+}
+.question-four:hover{
+    color: white;
+    cursor: pointer;
+}
