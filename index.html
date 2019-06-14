@@ -41,6 +41,7 @@
     var whatQuestion = 0;
     var amountCorrect = 0;
     var amountWrong = 0;
+    var amountUnAnswered = 5;  
     var skipToNext = false;  
     var counter = 0;
     var correctArray = [false,false,false,false,false]
@@ -97,10 +98,10 @@
         $(".question-zero").text("End Of Game!");
         $(".question-one").text("Amount Of Correct Answers " + amountCorrect).unbind("mouseenter mouseleave");
         $(".question-two").text("Amount Of Wrong Answers " + amountWrong);
-        $(".question-three").text("Click To Play Again!"); 
-        $(".question-four").empty(); 
+        $(".question-three").text("Amount Unanswered: " + amountUnAnswered);
+        $(".question-four").text("Click To Play Again!"); 
         $(".amountOfTime").empty(); 
-        $(".question-three").on("click", function (event) {
+        $(".question-four").on("click", function (event) {
             location.reload();
          });
     }  
@@ -120,6 +121,11 @@
             $(".question-two").text(question[2]); $(".question-three").text(question[3]); 
             $(".question-four").text(question[4]);  
             if(numberOfSecondsLeft <= 0 || skipToNext === true){ clearInterval(countDown); 
+                
+                if(skipToNext === true){
+                   amountUnAnswered--;
+                }                                                
+                                                                
                 if(amountOfQuestions > -1){
                     Timer(theQuestion[amountOfQuestions--]); 
                 } 
